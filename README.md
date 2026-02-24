@@ -56,4 +56,4 @@ Si quieres replicar este proyecto localmente:
 
 1. Clona el repositorio:
    ```bash
-   git clone [https://github.com/tu-usuario/nombre-del-repo.git](https://github.com/tu-usuario/nombre-del-repo.git)
+   git clone [https://github.com/rucaru/semana_proyectos.git](https://github.com/rucaru/semana_proyectos.git)
