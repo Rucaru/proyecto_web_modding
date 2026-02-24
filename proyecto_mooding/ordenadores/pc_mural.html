@@ -1,0 +1,152 @@
+<!-- <!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PC Mural</title>
+  </head>
+  <style>
+    .contenedor {
+      display: flex;
+      justify-content: center;
+      border: 3px solid black;
+    }
+    header {
+      background-color: rgb(95, 191, 251);
+      font-weight: bold;
+      text-align: center;
+      top: 0;
+      left: 0;
+      padding: 20px;
+    }
+  </style>
+  <body>
+    <header>PÁGINA PRINCIPAL</header>
+    <div class="contenedor">
+      <h1>titulo</h1>
+      <div class="ordenador">
+        <img src="" alt="" />
+        <div class="descripcion">
+          <p></p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html> -->
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PC Mural - Modding</title>
+    <style>
+      /* Reset básico para que no queden huecos blancos en los bordes */
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+      }
+
+      header {
+        background-color: rgb(95, 191, 251);
+        font-weight: bold;
+        text-align: center;
+        padding: 20px;
+        font-size: 1.5rem;
+      }
+
+      .contenedor {
+        display: flex;
+        flex-direction: column; /* Para que el título esté arriba de la imagen */
+        align-items: center;
+        padding: 20px;
+      }
+
+      /* Contenedor específico para la imagen y los puntos */
+      .ordenador-wrapper {
+        position: relative; /* Clave: Los puntos se posicionan respecto a esto */
+        display: inline-block;
+        border: 3px solid black;
+        margin-top: 20px;
+      }
+
+      .foto-pc {
+        display: block;
+        max-width: 100%; /* Se adapta al ancho de pantalla */
+        height: auto;
+      }
+
+      /* Estilo del punto interactivo */
+      .punto-interactivos {
+        position: absolute;
+        width: 25px;
+        height: 25px;
+        background-color: rgb(95, 191, 251);
+        border: 2px solid white;
+        border-radius: 50%;
+        cursor: pointer;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        transition: transform 0.2s ease-in-out;
+      }
+
+      .punto-interactivos:hover {
+        transform: scale(1.3);
+        background-color: white;
+      }
+
+      /* El cuadro de texto (Tooltip) */
+      .descripcion {
+        visibility: hidden;
+        width: 180px;
+        background-color: rgba(0, 0, 0, 0.85);
+        color: #fff;
+        text-align: center;
+        padding: 10px;
+        border-radius: 8px;
+        position: absolute;
+        bottom: 125%; /* Aparece sobre el punto */
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 10;
+        font-size: 0.9rem;
+        border: 1px solid rgb(95, 191, 251);
+      }
+
+      /* Mostrar la descripción al pasar el ratón por el punto */
+      .punto-interactivos:hover .descripcion {
+        visibility: visible;
+      }
+    </style>
+  </head>
+  <body>
+    <header>PÁGINA PRINCIPAL - MODDING PC</header>
+
+    <div class="contenedor">
+      <h1>Mi Proyecto de Modding</h1>
+
+      <div class="ordenador-wrapper">
+        <img src="pc-modding.jpg" alt="PC Modding" class="foto-pc" />
+
+        <div class="punto-interactivos" style="top: 50%; left: 45%">
+          <div class="descripcion">
+            <strong>GPU:</strong> Soporte vertical personalizado con iluminación
+            ARGB.
+          </div>
+        </div>
+
+        <div class="punto-interactivos" style="top: 15%; left: 40%">
+          <div class="descripcion">
+            <strong>AIO:</strong> Tubos con funda blanca para combinar con el
+            chasis.
+          </div>
+        </div>
+
+        <div class="punto-interactivos" style="top: 70%; left: 70%">
+          <div class="descripcion">
+            <strong>Cable Management:</strong> Extensiones malladas de color
+            azul.
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
