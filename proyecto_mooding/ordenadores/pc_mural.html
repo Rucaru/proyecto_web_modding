@@ -1,38 +1,3 @@
-<!-- <!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PC Mural</title>
-  </head>
-  <style>
-    .contenedor {
-      display: flex;
-      justify-content: center;
-      border: 3px solid black;
-    }
-    header {
-      background-color: rgb(95, 191, 251);
-      font-weight: bold;
-      text-align: center;
-      top: 0;
-      left: 0;
-      padding: 20px;
-    }
-  </style>
-  <body>
-    <header>PÁGINA PRINCIPAL</header>
-    <div class="contenedor">
-      <h1>titulo</h1>
-      <div class="ordenador">
-        <img src="" alt="" />
-        <div class="descripcion">
-          <p></p>
-        </div>
-      </div>
-    </div>
-  </body>
-</html> -->
 <!doctype html>
 <html lang="es">
   <head>
@@ -40,110 +5,267 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PC Mural - Modding</title>
     <style>
-      /* Reset básico para que no queden huecos blancos en los bordes */
-      body {
-        margin: 0;
-        font-family: Arial, sans-serif;
+      @font-face {
+        font-family: "Monograph";
+        src: url("../../fonts/monograph-Regular.ttf") format("truetype");
+        font-weight: 400;
+        font-style: normal;
       }
 
-      header {
-        background-color: rgb(95, 191, 251);
-        font-weight: bold;
-        text-align: center;
-        padding: 20px;
-        font-size: 1.5rem;
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: "Segoe UI", Tahoma, sans-serif;
+        color: #e9f4ff;
+        background:
+          radial-gradient(circle at 12% 10%, #2f74a8 0%, transparent 35%),
+          radial-gradient(circle at 88% 30%, #2c83bb 0%, transparent 30%),
+          linear-gradient(170deg, #041124 0%, #0b2440 60%, #10315a 100%);
+      }
+
+      .site-header {
+        position: sticky;
+        top: 0;
+        z-index: 30;
+        width: min(1080px, calc(100% - 2.5rem));
+        margin: 1rem auto 0;
+        border: 1px solid rgba(163, 221, 255, 0.35);
+        border-radius: 14px;
+        background: rgba(7, 26, 50, 0.72);
+        backdrop-filter: blur(8px);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+      }
+
+      .home-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 64px;
+        font-size: 0.98rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        font-weight: 600;
+        color: #d8efff;
+        text-decoration: none;
+      }
+
+      .home-link:hover {
+        color: #ffffff;
       }
 
       .contenedor {
         display: flex;
-        flex-direction: column; /* Para que el título esté arriba de la imagen */
+        flex-direction: column;
         align-items: center;
-        padding: 20px;
+        gap: 0.9rem;
+        width: min(1080px, calc(100% - 2.5rem));
+        margin: 2rem auto 2.4rem;
       }
 
-      /* Contenedor específico para la imagen y los puntos */
+      h1 {
+        margin: 0;
+        text-align: center;
+        font-family: "Monograph", "Segoe UI", sans-serif;
+        font-size: clamp(2.5rem, 8vw, 5.5rem);
+        letter-spacing: 0.05em;
+        color: #f3fbff;
+        text-shadow: 0 6px 24px rgba(42, 154, 224, 0.42);
+      }
+
+      .subtitulo {
+        margin: 0 0 0.5rem;
+        max-width: 65ch;
+        text-align: center;
+        color: #b8dfff;
+        line-height: 1.4;
+      }
+
       .ordenador-wrapper {
-        position: relative; /* Clave: Los puntos se posicionan respecto a esto */
-        display: inline-block;
-        border: 3px solid black;
-        margin-top: 20px;
+        position: relative;
+        width: min(980px, 100%);
+        border-radius: 20px;
+        overflow: hidden;
+        border: 1px solid rgba(144, 217, 255, 0.3);
+        box-shadow:
+          0 16px 42px rgba(2, 8, 22, 0.55),
+          inset 0 0 0 1px rgba(186, 234, 255, 0.08);
       }
 
       .foto-pc {
         display: block;
-        max-width: 100%; /* Se adapta al ancho de pantalla */
+        width: 100%;
         height: auto;
+        max-height: 74vh;
+        object-fit: cover;
+        filter: saturate(1.12) contrast(1.05);
       }
 
-      /* Estilo del punto interactivo */
-      .punto-interactivos {
+      .punto-interactivo {
         position: absolute;
-        width: 25px;
-        height: 25px;
-        background-color: rgb(95, 191, 251);
-        border: 2px solid white;
+        top: var(--y);
+        left: var(--x);
+        width: 28px;
+        height: 28px;
+        border: 2px solid #eff9ff;
         border-radius: 50%;
+        background: linear-gradient(145deg, #6fd4ff, #3399e6);
         cursor: pointer;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-        transition: transform 0.2s ease-in-out;
+        box-shadow:
+          0 0 0 8px rgba(100, 190, 241, 0.16),
+          0 6px 18px rgba(0, 0, 0, 0.35);
+        transform: translate(-50%, -50%);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
       }
 
-      .punto-interactivos:hover {
-        transform: scale(1.3);
-        background-color: white;
+      .punto-interactivo::after {
+        content: "";
+        position: absolute;
+        inset: -8px;
+        border-radius: 50%;
+        border: 1px solid rgba(188, 236, 255, 0.7);
+        animation: pulse 1.8s ease-out infinite;
       }
 
-      /* El cuadro de texto (Tooltip) */
+      .punto-interactivo:hover {
+        transform: translate(-50%, -50%) scale(1.14);
+        box-shadow:
+          0 0 0 10px rgba(155, 226, 255, 0.24),
+          0 10px 20px rgba(0, 0, 0, 0.45);
+      }
+
+      .etiqueta {
+        position: absolute;
+        left: 38px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 0.77rem;
+        text-transform: uppercase;
+        letter-spacing: 0.09em;
+        color: #ecf8ff;
+        background: rgba(3, 20, 41, 0.76);
+        border: 1px solid rgba(162, 229, 255, 0.44);
+        padding: 0.2rem 0.5rem;
+        border-radius: 999px;
+        white-space: nowrap;
+      }
+
       .descripcion {
-        visibility: hidden;
-        width: 180px;
-        background-color: rgba(0, 0, 0, 0.85);
-        color: #fff;
-        text-align: center;
-        padding: 10px;
+        opacity: 0;
+        pointer-events: none;
+        width: min(230px, 54vw);
+        background: rgba(5, 20, 40, 0.92);
+        color: #eef8ff;
+        text-align: left;
+        padding: 0.72rem 0.8rem;
         border-radius: 8px;
         position: absolute;
-        bottom: 125%; /* Aparece sobre el punto */
-        left: 50%;
-        transform: translateX(-50%);
+        bottom: 140%;
+        left: 14px;
+        transform: translateX(-50%) translateY(8px);
         z-index: 10;
-        font-size: 0.9rem;
-        border: 1px solid rgb(95, 191, 251);
+        font-size: 0.84rem;
+        line-height: 1.4;
+        border: 1px solid rgba(169, 227, 255, 0.6);
+        box-shadow: 0 14px 24px rgba(0, 0, 0, 0.38);
+        transition: opacity 0.18s ease, transform 0.18s ease;
       }
 
-      /* Mostrar la descripción al pasar el ratón por el punto */
-      .punto-interactivos:hover .descripcion {
-        visibility: visible;
+      .punto-interactivo:hover .descripcion {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
+
+      @keyframes pulse {
+        0% {
+          transform: scale(0.9);
+          opacity: 0.75;
+        }
+        100% {
+          transform: scale(1.35);
+          opacity: 0;
+        }
+      }
+
+      @media (max-width: 700px) {
+        .site-header {
+          width: calc(100% - 1.3rem);
+          margin-top: 0.65rem;
+        }
+
+        .contenedor {
+          width: calc(100% - 1.3rem);
+          margin-top: 1.2rem;
+        }
+
+        .home-link {
+          min-height: 56px;
+          font-size: 0.85rem;
+          letter-spacing: 0.04em;
+        }
+
+        .etiqueta {
+          display: none;
+        }
+
+        .descripcion {
+          width: 165px;
+          font-size: 0.78rem;
+        }
       }
     </style>
   </head>
   <body>
-    <header><a href="../index.html">PÁGINA PRINCIPAL - MODDING PC</a></header>
+    <header class="site-header">
+      <a class="home-link" href="../index.html">PAGINA PRINCIPAL - MODDING PC</a>
+    </header>
 
     <div class="contenedor">
-      <h1>Mi Proyecto de Modding</h1>
+      <h1>PC Mural</h1>
+      <p class="subtitulo">
+        Explora el montaje del equipo pasando por cada punto para ver los
+        componentes destacados.
+      </p>
 
       <div class="ordenador-wrapper">
-        <img src="pc-modding.jpg" alt="PC Modding" class="foto-pc" />
+        <img
+          src="../../ideas_imagenes/PC-Viejo-2-1.jpg.webp"
+          alt="Ordenador de sobremesa para modding con puntos interactivos de componentes"
+          class="foto-pc"
+        />
 
-        <div class="punto-interactivos" style="top: 50%; left: 45%">
+        <div class="punto-interactivo" style="--x: 48%; --y: 57%">
+          <span class="etiqueta">GPU</span>
           <div class="descripcion">
-            <strong>GPU:</strong> Soporte vertical personalizado con iluminación
-            ARGB.
+            <strong>GPU:</strong> Montaje en vertical con zona de flujo de aire
+            optimizada y foco visual de la build.
           </div>
         </div>
 
-        <div class="punto-interactivos" style="top: 15%; left: 40%">
+        <div class="punto-interactivo" style="--x: 41%; --y: 24%">
+          <span class="etiqueta">AIO</span>
           <div class="descripcion">
-            <strong>AIO:</strong> Tubos con funda blanca para combinar con el
-            chasis.
+            <strong>AIO:</strong> Refrigeracion liquida all-in-one para mantener
+            temperaturas estables en carga.
           </div>
         </div>
-        <img src="../../ideas_imagenes/juan_antonio_the_king.jpg" alt="n" width="150px">
-        <div class="punto-interactivos" style="top: 70%; left: 70%">
+
+        <div class="punto-interactivo" style="--x: 66%; --y: 67%">
+          <span class="etiqueta">Cables</span>
           <div class="descripcion">
-            <strong>Cable Management:</strong> Extensiones malladas de color
-            azul.
+            <strong>Cable Management:</strong> Guiado limpio con extensiones
+            malladas para mejorar estetica y mantenimiento.
+          </div>
+        </div>
+
+        <div class="punto-interactivo" style="--x: 26%; --y: 72%">
+          <span class="etiqueta">PSU</span>
+          <div class="descripcion">
+            <strong>Fuente:</strong> Compartimento inferior aislado para reducir
+            ruido y ordenar el interior del chasis.
           </div>
         </div>
       </div>
