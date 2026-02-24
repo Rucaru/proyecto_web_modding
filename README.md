@@ -24,14 +24,14 @@ Este sitio web es el escaparate digital para el proyecto de **Modding** realizad
 ## 🛠️ Tecnologías Utilizadas
 
 * **Frontend:** HTML5, CSS3 y JavaScript.
-* **Diseño:** (Añadir aquí si usas algún framework como Bootstrap o Tailwind).
-* **Hosting:** GitHub Pages.
+* **Estilos:** (Añadir aquí si usas algún framework como Bootstrap o Tailwind).
+* **Despliegue:** GitHub Pages / Vercel.
 
 ---
 
 ## 📸 Galería de Proyectos
 
-Aquí puedes insertar las fotos de los mejores mods realizados por los alumnos:
+Aquí puedes insertar las fotos de los mejores mods:
 
 | Proyecto Alpha | Proyecto Beta | Proyecto Gamma |
 | :---: | :---: | :---: |
@@ -52,8 +52,8 @@ Aquí puedes insertar las fotos de los mejores mods realizados por los alumnos:
 
 ## 🛠️ Instalación y Uso
 
-Si quieres clonar este proyecto localmente para verlo o editarlo:
+Si quieres replicar este proyecto localmente:
 
-1. Clona el repositorio desde tu terminal:
+1. Clona el repositorio:
    ```bash
-   git clone [https://github.com/rucaru/semana_proyectos.git](https://github.com/rucaru/semana_proyectos.git)
+   git clone [https://github.com/rucaru/semana_proyectos.git](https://github.com/Rucaru/semana_proyectos.git)
