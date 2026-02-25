@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="Terminal antiguo estilo IBM">
+  <defs>
+    <linearGradient id="bg3" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1c1f3f"/>
+      <stop offset="100%" stop-color="#284a7a"/>
+    </linearGradient>
+    <linearGradient id="screen3" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#b6ffc3"/>
+      <stop offset="100%" stop-color="#5dd17a"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg3)"/>
+  <g fill="#f3e7be" opacity="0.12">
+    <rect x="120" y="120" width="160" height="40"/>
+    <rect x="360" y="120" width="280" height="40"/>
+    <rect x="700" y="120" width="220" height="40"/>
+    <rect x="980" y="120" width="180" height="40"/>
+  </g>
+  <rect x="390" y="165" width="820" height="560" rx="42" fill="#dad0ad"/>
+  <rect x="455" y="235" width="690" height="360" rx="20" fill="#2f403d"/>
+  <rect x="490" y="270" width="620" height="290" rx="14" fill="url(#screen3)"/>
+  <g fill="#18422b" font-family="monospace" font-size="26" opacity="0.78">
+    <text x="525" y="335">[1986 TERMINAL]</text>
+    <text x="525" y="380">> system check .... OK</text>
+    <text x="525" y="425">> floppy drive .... OK</text>
+    <text x="525" y="470">> network link .... OFF</text>
+  </g>
+  <rect x="640" y="730" width="320" height="36" rx="18" fill="#b6a981"/>
+</svg>

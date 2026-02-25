@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Detalles del PC - Modding</title>
+    <style>
+      @font-face {
+        font-family: "Monograph";
+        src: url("../../fonts/monograph-Regular.ttf") format("truetype");
+        font-weight: 400;
+        font-style: normal;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        /* Fondo color hueso/esqueleto basado en index.html */
+        background-color: rgb(245, 231, 209);
+        color: #710000;
+        font-family: "Segoe UI", Tahoma, sans-serif;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      /* Cabecera con estilo retro */
+      .site-header {
+        width: min(1080px, calc(100% - 2.5rem));
+        margin: 1.5rem auto;
+        border: 2px solid #071a32;
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.5);
+        backdrop-filter: blur(5px);
+      }
+
+      .home-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 50px;
+        font-family: "Monograph", monospace;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        color: #710000;
+        text-decoration: none;
+        font-weight: bold;
+        letter-spacing: 1px;
+      }
+
+      .home-link:hover {
+        background-color: #710000;
+        color: #fdf2cc;
+        border-radius: 10px;
+      }
+
+      /* Contenedor de Contenido Principal */
+      .main-content {
+        width: min(1150px, calc(100% - 2.5rem));
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        gap: 2.5rem;
+        margin-top: 1rem;
+        margin-bottom: 4rem;
+      }
+
+      h1 {
+        grid-column: 1 / -1;
+        font-family: "Monograph", sans-serif;
+        font-size: clamp(2.5rem, 6vw, 4.5rem);
+        text-align: center;
+        color: #710000;
+        margin-bottom: 1rem;
+        text-transform: uppercase;
+      }
+
+      /* Área de la Imagen (Showcase) */
+      .pc-visual-wrapper {
+        position: relative;
+        border: 3px solid #071a32;
+        border-radius: 20px;
+        overflow: hidden;
+        background: #fff;
+        box-shadow: 10px 10px 0px rgba(7, 26, 50, 0.1);
+      }
+
+      .foto-pc {
+        display: block;
+        width: 100%;
+        height: auto;
+        filter: contrast(1.05);
+      }
+
+      /* Puntos interactivos con el mismo comportamiento de pc_mural */
+      .punto-interactivo {
+        position: absolute;
+        top: var(--y);
+        left: var(--x);
+        width: 28px;
+        height: 28px;
+        border: 2px solid #fdf2cc;
+        border-radius: 50%;
+        background: linear-gradient(145deg, #8f0b0b, #710000);
+        cursor: pointer;
+        box-shadow:
+          0 0 0 8px rgba(113, 0, 0, 0.2),
+          0 6px 18px rgba(0, 0, 0, 0.35);
+        transform: translate(-50%, -50%);
+        transition:
+          transform 0.2s ease,
+          box-shadow 0.2s ease;
+      }
+
+      .punto-interactivo::after {
+        content: "";
+        position: absolute;
+        inset: -8px;
+        border-radius: 50%;
+        border: 1px solid rgba(113, 0, 0, 0.55);
+        animation: pulse 1.8s ease-out infinite;
+      }
+
+      .punto-interactivo:hover {
+        transform: translate(-50%, -50%) scale(1.14);
+        box-shadow:
+          0 0 0 10px rgba(113, 0, 0, 0.26),
+          0 10px 20px rgba(0, 0, 0, 0.45);
+      }
+
+      .etiqueta {
+        position: absolute;
+        left: 38px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 0.77rem;
+        text-transform: uppercase;
+        letter-spacing: 0.09em;
+        color: #fdf2cc;
+        background: rgba(31, 2, 2, 0.86);
+        border: 1px solid rgba(171, 89, 89, 0.7);
+        padding: 0.2rem 0.5rem;
+        border-radius: 999px;
+        white-space: nowrap;
+      }
+
+      .descripcion {
+        opacity: 0;
+        pointer-events: none;
+        width: min(230px, 54vw);
+        background: rgba(33, 3, 3, 0.95);
+        color: #f8eded;
+        text-align: left;
+        padding: 0.72rem 0.8rem;
+        border-radius: 8px;
+        position: absolute;
+        bottom: 140%;
+        left: 14px;
+        transform: translateX(-50%) translateY(8px);
+        z-index: 10;
+        font-size: 0.84rem;
+        line-height: 1.4;
+        border: 1px solid rgba(171, 89, 89, 0.75);
+        box-shadow: 0 14px 24px rgba(0, 0, 0, 0.38);
+        transition:
+          opacity 0.18s ease,
+          transform 0.18s ease;
+      }
+
+      .punto-interactivo.is-open .descripcion {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
+
+      /* Panel de Información (Párrafos) */
+      .info-panel {
+        background: white;
+        border: 3px solid #071a32;
+        border-radius: 20px;
+        padding: 2rem;
+        box-shadow: 10px 10px 0px rgba(7, 26, 50, 0.1);
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      .info-panel h2 {
+        font-family: "Monograph", monospace;
+        font-size: 1.4rem;
+        border-bottom: 2px solid #071a32;
+        padding-bottom: 0.5rem;
+        color: #710000;
+      }
+
+      .info-text {
+        line-height: 1.6;
+        font-size: 1.05rem;
+        color: #333;
+      }
+
+      .highlight-box {
+        background: #fdf2cc;
+        padding: 1rem;
+        border-radius: 10px;
+        border-left: 5px solid #071a32;
+        font-style: italic;
+      }
+
+      @keyframes pulse {
+        0% {
+          transform: scale(0.95);
+          opacity: 1;
+        }
+        100% {
+          transform: scale(1.5);
+          opacity: 0;
+        }
+      }
+
+      /* Adaptación a móviles */
+      @media (max-width: 850px) {
+        .main-content {
+          grid-template-columns: 1fr;
+        }
+
+        .etiqueta {
+          display: none;
+        }
+
+        .descripcion {
+          width: 165px;
+          font-size: 0.78rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="home-link" href="../index.html">← VOLVER AL CATÁLOGO</a>
+    </header>
+
+    <main class="main-content">
+      <h1>Custom Workstation</h1>
+
+      <section class="pc-visual-wrapper">
+        <img
+          src="../../ideas_imagenes/PC-Viejo-2-1.jpg.webp"
+          alt="PC Custom"
+          class="foto-pc"
+        />
+
+        <div
+          class="punto-interactivo"
+          style="--x: 48%; --y: 57%"
+          role="button"
+          tabindex="0"
+          aria-expanded="false"
+        >
+          <span class="etiqueta">GPU</span>
+          <div class="descripcion">
+            <strong>GPU:</strong> Montaje en vertical con zona de flujo de aire
+            optimizada y foco visual de la build.
+          </div>
+        </div>
+
+        <div
+          class="punto-interactivo"
+          style="--x: 41%; --y: 24%"
+          role="button"
+          tabindex="0"
+          aria-expanded="false"
+        >
+          <span class="etiqueta">AIO</span>
+          <div class="descripcion">
+            <strong>AIO:</strong> Refrigeracion liquida all-in-one para mantener
+            temperaturas estables en carga.
+          </div>
+        </div>
+
+        <div
+          class="punto-interactivo"
+          style="--x: 66%; --y: 67%"
+          role="button"
+          tabindex="0"
+          aria-expanded="false"
+        >
+          <span class="etiqueta">Cables</span>
+          <div class="descripcion">
+            <strong>Cable Management:</strong> Guiado limpio con extensiones
+            malladas para mejorar estetica y mantenimiento.
+          </div>
+        </div>
+
+        <div
+          class="punto-interactivo"
+          style="--x: 26%; --y: 72%"
+          role="button"
+          tabindex="0"
+          aria-expanded="false"
+        >
+          <span class="etiqueta">PSU</span>
+          <div class="descripcion">
+            <strong>Fuente:</strong> Compartimento inferior aislado para reducir
+            ruido y ordenar el interior del chasis.
+          </div>
+        </div>
+      </section>
+
+      <section class="info-panel">
+        <h2>Descripción del Proyecto</h2>
+
+        <p class="info-text">
+          Este montaje representa la fusión entre el hardware moderno de alto
+          rendimiento y una estética industrial limpia. Cada componente ha sido
+          seleccionado no solo por su potencia, sino por su capacidad de
+          integrarse en un ecosistema visual coherente.
+        </p>
+
+        <div class="highlight-box">
+          "La clave de este modding reside en el equilibrio térmico y el guiado
+          de cables minimalista."
+        </div>
+
+        <p class="info-text">
+          Aquí puedes escribir todos los detalles técnicos o la historia detrás
+          de la construcción de este PC. La estructura es flexible para que
+          añadidas tantos párrafos como necesites, manteniendo siempre la
+          legibilidad.
+        </p>
+
+        <p class="info-text">
+          <strong>Nota adicional:</strong> El flujo de aire ha sido testado para
+          mantener temperaturas óptimas incluso bajo cargas de trabajo pesadas
+          de renderizado 3D.
+        </p>
+      </section>
+    </main>
+    <script>
+      const points = document.querySelectorAll(".punto-interactivo");
+
+      const closeAllPoints = () => {
+        points.forEach((point) => {
+          point.classList.remove("is-open");
+          point.setAttribute("aria-expanded", "false");
+        });
+      };
+
+      points.forEach((point) => {
+        point.addEventListener("click", (event) => {
+          event.stopPropagation();
+          const willOpen = !point.classList.contains("is-open");
+          closeAllPoints();
+          if (willOpen) {
+            point.classList.add("is-open");
+            point.setAttribute("aria-expanded", "true");
+          }
+        });
+
+        point.addEventListener("keydown", (event) => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            point.click();
+          }
+        });
+      });
+
+      document.addEventListener("click", closeAllPoints);
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") closeAllPoints();
+      });
+    </script>
+  </body>
+</html>

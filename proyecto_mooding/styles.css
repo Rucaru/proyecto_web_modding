@@ -1,13 +1,17 @@
 * {
-  font-family: Arial, Helvetica, sans-serif;
   padding: 0;
   margin: 0;
   box-sizing: border-box;
 }
 
+:root {
+  --ink-border: #071a32;
+  --panel-bg: rgb(255, 248, 229);
+}
+
 @font-face {
   font-family: "Monograph";
-  src: url("/fonts/monograph-Regular.ttf");
+  src: url("../fonts/monograph-Regular.ttf");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -18,35 +22,82 @@ body {
   background-position: center;
   background-attachment: fixed;
   background-size: cover;
-  background: #222233;
-  background: linear-gradient(90deg, #4b6cb7 0%, #182848 100%);
+  background-image: url("/ideas_imagenes/fondo_index.png");
   min-height: 100vh;
   display: flex;
   align-items: center;
   flex-direction: column;
   padding: 0 1rem 2rem;
+  position: relative;
 }
 
-h1 {
+.title-flip {
+  margin-top: 1.1rem;
+  cursor: pointer;
+  perspective: 1200px;
+  outline: none;
+}
+
+.title-flip-inner {
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.7s cubic-bezier(0.22, 0.9, 0.28, 1);
+}
+
+.title-flip.is-flipped .title-flip-inner {
+  transform: rotateY(180deg);
+}
+
+.title-face {
   font-size: clamp(2.5rem, 10vw, 7.5rem);
-  line-height: 1.1;
+  line-height: 0.92;
   font-weight: 800;
   text-transform: uppercase;
-  padding: 30px;
-  color: rgb(113, 153, 155);
+  padding: clamp(0.92rem, 1.55vw, 1.45rem) clamp(1.2rem, 3.4vw, 2.8rem)
+    clamp(0.76rem, 1.3vw, 1.2rem);
+  color: #000;
   font-family: "Monograph", monospace;
-  text-shadow: -5px 1px 6px rgba(0, 0, 0, 0.6);
+  background: var(--panel-bg);
+  border-radius: 999px;
+  border: 2px solid var(--ink-border);
+  box-shadow: 6px 6px 0 rgba(7, 26, 50, 0.14);
+  backface-visibility: hidden;
+  text-align: center;
+}
+
+.title-front {
+  transform-origin: center;
+  transition:
+    transform 0.42s cubic-bezier(0.2, 0.9, 0.28, 1),
+    box-shadow 0.42s cubic-bezier(0.2, 0.9, 0.28, 1);
+}
+
+.title-back {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: rotateY(180deg);
+  font-size: clamp(0.95rem, 2.8vw, 1.5rem);
+  letter-spacing: 0.05em;
+}
+
+.title-flip:not(.is-flipped):hover .title-front {
+  transform: translateY(-2px) scale(1.045);
+  box-shadow: 12px 12px 0 rgba(7, 26, 50, 0.2);
 }
 
 p {
   font-size: clamp(1.125rem, 1.5vw + 0.5rem, 1.625rem);
   font-style: italic;
   font-family: "Monograph", monospace;
-  line-height: 1.6;
-  max-width: 65ch;
+  line-height: 1.5;
   margin: 0 auto;
   color: rgb(180, 217, 202);
-  letter-spacing: -0.02em;
+  background-color: #08252e75;
+  border-radius: 10px;
+  padding: 10px;
 }
 
 .carousel {
@@ -169,48 +220,41 @@ p {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.8rem;
+  flex-direction: column;
+  gap: 0.6rem;
   transition: opacity 0.25s ease;
   pointer-events: none;
   transform-origin: center;
 }
 
-.roulette-overlay-text {
+.roulette-overlay-title {
   color: #fdf2cc;
   font-family: "Monograph", monospace;
-  font-size: clamp(0.9rem, 1.2vw, 1.15rem);
+  font-size: clamp(1.05rem, 1.5vw, 1.35rem);
+  font-weight: 800;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
 }
 
 .learn-more-btn {
   pointer-events: auto;
   text-decoration: none;
-  color: #08252e;
-  background: rgba(254, 233, 170, 0.95);
-  border: 1px solid rgba(254, 233, 170, 0.8);
+  color: var(--ink-border);
+  font-family: "Monograph", monospace;
+  font-size: clamp(0.9rem, 1.15vw, 1.05rem);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border: 2px solid var(--ink-border);
   border-radius: 999px;
   padding: 0.35rem 0.9rem;
-  font-size: 0.85rem;
-  font-weight: 700;
-  transition:
-    transform 0.2s ease,
-    background-color 0.2s ease;
-}
-
-.learn-more-btn:hover {
-  transform: translateY(-1px);
-  background: rgba(255, 240, 194, 1);
+  background: var(--panel-bg);
 }
 
 .roulette-panel.is-active .roulette-overlay {
-  transform: perspective(1200px) translateY(0) rotateX(3deg) scale(1.18);
-}
-
-.roulette-panel.is-active:hover .roulette-overlay,
-.roulette-panel.is-active:focus-within .roulette-overlay {
   opacity: 1;
   pointer-events: auto;
+  transform: perspective(1200px) translateY(0) rotateX(3deg) scale(1.18);
 }
 
 .roulette-panel.is-active .roulette-image {
@@ -270,39 +314,30 @@ p {
   z-index: 2;
 }
 
-.roulette-panel.is-active .roulette-image:hover {
-  transform: perspective(1200px) translateY(-8px) rotateX(3deg) scale(1.22);
-}
-
-.carousel:hover .roulette {
-  transform: rotateX(-18deg) rotateY(var(--rotation-y)) scale(1.01);
-}
-
 .carousel-arrow {
-  border: 1px solid rgba(244, 222, 168, 0.5);
+  border: 2px solid var(--ink-border);
   width: 56px;
   height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
   border-radius: 999px;
   cursor: pointer;
   font-size: 1.6rem;
   line-height: 1;
-  color: #fff5d7;
-  background: linear-gradient(
-    135deg,
-    rgba(29, 88, 98, 0.46),
-    rgba(89, 152, 144, 0.28)
-  );
-  backdrop-filter: blur(5px);
-  box-shadow:
-    0 8px 22px rgba(0, 0, 0, 0.3),
-    inset 0 0 14px rgba(255, 230, 172, 0.16);
-  opacity: 0.62;
+  color: var(--ink-border);
+  background: var(--panel-bg);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.28);
+  opacity: 1;
   position: absolute;
   top: 50%;
   z-index: 4;
   transition:
     transform 0.2s ease,
     background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
     opacity 0.2s ease,
     box-shadow 0.2s ease;
 }
@@ -318,15 +353,10 @@ p {
 }
 
 .carousel-arrow:hover {
-  opacity: 0.94;
-  background: linear-gradient(
-    135deg,
-    rgba(29, 88, 98, 0.7),
-    rgba(126, 182, 154, 0.4)
-  );
-  box-shadow:
-    0 12px 28px rgba(0, 0, 0, 0.34),
-    inset 0 0 16px rgba(255, 230, 172, 0.28);
+  opacity: 1;
+  color: var(--ink-border);
+  background: var(--panel-bg);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.34);
 }
 
 #prev-btn:hover {
@@ -385,9 +415,9 @@ p {
   }
 
   .carousel-arrow {
-    width: 48px;
-    height: 48px;
-    font-size: 1.4rem;
+    width: 50px;
+    height: 50px;
+    font-size: 1.5rem;
   }
 }
 
@@ -432,17 +462,95 @@ p {
   }
 
   .carousel-arrow {
-    width: 42px;
-    height: 42px;
-    font-size: 1.15rem;
-    opacity: 0.72;
+    width: 46px;
+    height: 46px;
+    font-size: 1.3rem;
+    opacity: 0.98;
   }
 
   #prev-btn {
-    left: 0.15rem;
+    left: 0.35rem;
   }
 
   #next-btn {
-    right: 0.15rem;
+    right: 0.35rem;
+  }
+}
+
+@media (max-width: 700px) {
+  .carousel {
+    padding: 0;
+  }
+
+  .carousel-stage {
+    min-height: auto;
+  }
+
+  .carousel-stage::before {
+    display: none;
+  }
+
+  .carousel-arrow {
+    display: none;
+  }
+
+  .roulette {
+    width: 100%;
+    height: auto;
+    transform: none;
+    transition: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.95rem;
+  }
+
+  .roulette-panel,
+  .roulette-panel.is-active,
+  .roulette-panel.is-left,
+  .roulette-panel.is-right,
+  .roulette-panel.is-back {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: min(90vw, 470px);
+    height: auto;
+    aspect-ratio: 16 / 9;
+    opacity: 1;
+    z-index: auto;
+  }
+
+  .roulette-panel:nth-child(odd) {
+    transform: translateX(0) rotate(0deg) !important;
+  }
+
+  .roulette-panel:nth-child(even) {
+    transform: translateX(0) rotate(0deg) !important;
+  }
+
+  .roulette-panel .roulette-image,
+  .roulette-panel.is-active .roulette-image,
+  .roulette-panel.is-left .roulette-image,
+  .roulette-panel.is-right .roulette-image,
+  .roulette-panel.is-back .roulette-image {
+    transform: none !important;
+    filter: saturate(1.02) brightness(1) !important;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.28);
+  }
+
+  .roulette-overlay,
+  .roulette-panel.is-active .roulette-overlay {
+    opacity: 1;
+    pointer-events: auto;
+    transform: none !important;
+    background: rgba(6, 29, 38, 0.62);
+  }
+
+  .roulette-overlay-title {
+    font-size: clamp(1rem, 3.2vw, 1.25rem);
+  }
+
+  .learn-more-btn {
+    font-size: clamp(0.85rem, 2.8vw, 1rem);
   }
 }

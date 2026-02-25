@@ -3,18 +3,30 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Principal</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <h1>mooding</h1>
-    <div class="intro">
+    <div
+      class="title-flip"
+      id="title-flip"
+      role="button"
+      tabindex="0"
+      aria-label="Mostrar autor del proyecto"
+      aria-pressed="false"
+    >
+      <div class="title-flip-inner">
+        <h1 class="title-face title-front">modding</h1>
+        <div class="title-face title-back">proyecto realizado por no se quien</div>
+      </div>
+    </div>
+    <!-- <div class="intro">
       <p>
         Redefiniendo el hardware clásico a través del arte digital. Desde
         ordenadores integrados en lienzos hasta sistemas completos dentro de
         monitores CRT reconvertidos.
       </p>
-    </div>
+    </div> -->
 
     <section class="carousel" aria-label="Carrusel de imágenes">
       <button class="carousel-arrow" id="prev-btn" aria-label="Imagen anterior">
@@ -36,19 +48,23 @@
     <script>
       const images = [
         {
-          src: "../ideas_imagenes/fondo_provisional.png",
+          src: "./ordenadores/retro_crt_workstation.svg",
+          title: "CRT WORKSTATION",
+          href: "ordenadores/pc_benchmark.html",
+        },
+        {
+          src: "./ordenadores/retro_tower_setup.svg",
+          title: "TORRE RETRO",
           href: "#",
         },
         {
-          src: "../ideas_imagenes/unnamed.jpg",
+          src: "./ordenadores/retro_ibm_terminal.svg",
+          title: "TERMINAL IBM",
           href: "#",
         },
         {
-          src: "../ideas_imagenes/70s-retro-perspective-lines-background-vintage-colourful-stripes-banner-backdrop-and-wallpaper-vector.jpg",
-          href: "#",
-        },
-        {
-          src: "../ideas_imagenes/retro_orbit.svg",
+          src: "./ordenadores/retro_luggable_pc.svg",
+          title: "LUGGABLE PC",
           href: "#",
         },
       ];
@@ -58,8 +74,11 @@
       const SPIN_MS = 280;
       const RESET_MS = 220;
       const STEP_DELAY_MS = 60;
+      const MOBILE_BREAKPOINT = 700;
 
       const roulette = document.getElementById("roulette");
+      const isMobileView = () =>
+        window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT}px)`).matches;
 
       function buildRoulette() {
         roulette.innerHTML = "";
@@ -80,23 +99,24 @@
           const overlay = document.createElement("div");
           overlay.className = "roulette-overlay";
 
-          const overlayText = document.createElement("p");
-          overlayText.className = "roulette-overlay-text";
-          overlayText.textContent = "Leer más";
+          const title = document.createElement("h3");
+          title.className = "roulette-overlay-title";
+          title.textContent = item.title;
 
           const link = document.createElement("a");
           link.className = "learn-more-btn";
           link.href = item.href;
           link.target = "_blank";
           link.rel = "noopener noreferrer";
-          link.textContent = "Abrir";
+          link.textContent = "Ver más";
 
-          overlay.append(overlayText, link);
+          overlay.append(title, link);
           card.append(img, overlay);
           panel.appendChild(card);
 
           panel.addEventListener("click", (event) => {
             if (event.target.closest(".learn-more-btn")) return;
+            if (isMobileView()) return;
             rotateToIndex(index);
           });
           roulette.appendChild(panel);
@@ -162,11 +182,27 @@
       }
 
       document.getElementById("prev-btn").addEventListener("click", () => {
+        if (isMobileView()) return;
         rotateRoulette(-1);
       });
 
       document.getElementById("next-btn").addEventListener("click", () => {
+        if (isMobileView()) return;
         rotateRoulette(1);
+      });
+
+      const titleFlip = document.getElementById("title-flip");
+      const toggleTitleFlip = () => {
+        const isFlipped = titleFlip.classList.toggle("is-flipped");
+        titleFlip.setAttribute("aria-pressed", String(isFlipped));
+      };
+
+      titleFlip.addEventListener("click", toggleTitleFlip);
+      titleFlip.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          toggleTitleFlip();
+        }
       });
 
       buildRoulette();
