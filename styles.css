@@ -1,3 +1,4 @@
+/**/
 * {
   padding: 0;
   margin: 0;
@@ -17,7 +18,6 @@
   font-display: swap;
 }
 body {
-  /* background-image: url(./images/fondo_index.png); */
   background-repeat: no-repeat;
   background-position: center;
   background-attachment: fixed;
@@ -50,11 +50,13 @@ body {
 
 .title-face {
   font-size: clamp(2.5rem, 10vw, 7.5rem);
-  line-height: 0.92;
+  line-height: 1;
   font-weight: 800;
   text-transform: uppercase;
-  padding: clamp(0.92rem, 1.55vw, 1.45rem) clamp(1.2rem, 3.4vw, 2.8rem)
-    clamp(0.76rem, 1.3vw, 1.2rem);
+  padding: clamp(0.92rem, 1.55vw, 1.45rem) clamp(1.2rem, 3.4vw, 2.8rem);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   color: #000;
   font-family: "Monograph", monospace;
   background: var(--panel-bg);

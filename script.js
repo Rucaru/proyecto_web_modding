@@ -1,21 +1,21 @@
 const images = [
   {
-    src: "./ordenadores/retro_crt_workstation.svg",
+    src: "./images/retro_crt_workstation.svg",
     title: "CRT WORKSTATION",
     href: "./ordenadores/pc_benchmark.html",
   },
   {
-    src: "./ordenadores/retro_tower_setup.svg",
+    src: "./images/retro_tower_setup.svg",
     title: "TORRE RETRO",
     href: "./ordenadores/pc_integrado.html",
   },
   {
-    src: "./ordenadores/retro_ibm_terminal.svg",
+    src: "./images/retro_ibm_terminal.svg",
     title: "TERMINAL IBM",
     href: "./ordenadores/pc_mural.html",
   },
   {
-    src: "./ordenadores/retro_luggable_pc.svg",
+    src: "./images/retro_luggable_pc.svg",
     title: "LUGGABLE PC",
     href: "./ordenadores/portatil_pc.html",
   },
