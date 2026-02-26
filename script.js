@@ -35,7 +35,7 @@ const isMobileView = () =>
 function buildRoulette() {
   roulette.innerHTML = "";
 
-  images.forEach((item, index) => {
+  images.forEach(({ src, title, href }, index) => {
     const panel = document.createElement("div");
     panel.className = "roulette-panel";
     panel.dataset.index = index;
@@ -45,24 +45,30 @@ function buildRoulette() {
 
     const img = document.createElement("img");
     img.className = "roulette-image";
-    img.src = item.src;
-    img.alt = item.title;
+    img.src = src;
+    img.alt = title;
 
     const overlay = document.createElement("div");
     overlay.className = "roulette-overlay";
 
-    const title = document.createElement("h3");
-    title.className = "roulette-overlay-title";
-    title.textContent = item.title;
+    const titleEl = document.createElement("h3");
+    titleEl.className = "roulette-overlay-title";
+    titleEl.textContent = title;
 
     const link = document.createElement("a");
     link.className = "learn-more-btn";
-    link.href = item.href;
+    link.href = href;
     link.target = "_blank";
     link.rel = "noopener noreferrer";
     link.textContent = "Ver más";
+    link.addEventListener("click", (event) => {
+      if (index !== currentIndex) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+    });
 
-    overlay.append(title, link);
+    overlay.append(titleEl, link);
     card.append(img, overlay);
     panel.appendChild(card);
 
@@ -80,8 +86,14 @@ function updateFocus() {
   const total = images.length;
 
   panels.forEach((panel, index) => {
+    const isActive = index === currentIndex;
     panel.classList.remove("is-active", "is-left", "is-right", "is-back");
-    panel.classList.toggle("is-active", index === currentIndex);
+    panel.classList.toggle("is-active", isActive);
+
+    const link = panel.querySelector(".learn-more-btn");
+    if (link) {
+      link.tabIndex = isActive || isMobileView() ? 0 : -1;
+    }
 
     const delta = (index - currentIndex + total) % total;
     if (delta === 1) panel.classList.add("is-right");
