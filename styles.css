@@ -11,18 +11,18 @@
 
 @font-face {
   font-family: "Monograph";
-  src: url("../fonts/monograph-Regular.ttf");
+  src: url("./fonts/monograph-Regular.ttf");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
 }
 body {
-  /* background-image: url(/ideas_imagenes/fondo_provisional.png); */
+  /* background-image: url(./images/fondo_index.png); */
   background-repeat: no-repeat;
   background-position: center;
   background-attachment: fixed;
   background-size: cover;
-  background-image: url("/ideas_imagenes/fondo_index.png");
+  background-image: url("./images/fondo_index.png");
   min-height: 100vh;
   display: flex;
   align-items: center;

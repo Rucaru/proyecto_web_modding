@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Principal</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div
+      class="title-flip"
+      id="title-flip"
+      role="button"
+      tabindex="0"
+      aria-label="Mostrar autor del proyecto"
+      aria-pressed="false"
+    >
+      <div class="title-flip-inner">
+        <h1 class="title-face title-front">modding</h1>
+        <div class="title-face title-back">
+          Proyecto realizado por 1º de DAW
+        </div>
+      </div>
+    </div>
+
+    <section class="carousel" aria-label="Carrusel de imágenes">
+      <button class="carousel-arrow" id="prev-btn" aria-label="Imagen anterior">
+        &#10094;
+      </button>
+
+      <div class="carousel-stage">
+        <div class="roulette" id="roulette"></div>
+      </div>
+      <button
+        class="carousel-arrow"
+        id="next-btn"
+        aria-label="Imagen siguiente"
+      >
+        &#10095;
+      </button>
+    </section>
+    <script src="script.js"></script>
+  </body>
+</html>
