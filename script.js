@@ -66,14 +66,26 @@ function buildRoulette() {
     card.append(img, overlay);
     panel.appendChild(card);
 
+    // CAMBIO: Lógica de clic mejorada
     panel.addEventListener("click", (event) => {
+      const isActive = panel.classList.contains("is-active");
+
+      // Si no es móvil y la tarjeta no está activa, rotamos (bloqueando el enlace)
+      if (!isActive && !isMobileView()) {
+        event.preventDefault();
+        rotateToIndex(index);
+        return;
+      }
+
+      // Si está activa y pulsas el botón, el enlace funcionará normalmente gracias al CSS
       if (event.target.closest(".learn-more-btn")) return;
-      if (isMobileView()) return;
-      rotateToIndex(index);
     });
+
     roulette.appendChild(panel);
   });
 }
+
+// ... El resto de funciones (updateFocus, rotateRoulette, etc.) se mantienen igual ...
 
 function updateFocus() {
   const panels = roulette.querySelectorAll(".roulette-panel");
