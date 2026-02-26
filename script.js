@@ -62,14 +62,6 @@ function buildRoulette() {
     link.rel = "noopener noreferrer";
     link.textContent = "Ver más";
 
-    link.addEventListener("click", (e) => {
-      e.stopPropagation();
-    });
-    link.addEventListener("click", (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      window.open(href, "_blank");
-    });
     overlay.append(titleEl, link);
     card.append(img, overlay);
     panel.appendChild(card);
