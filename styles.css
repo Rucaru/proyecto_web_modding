@@ -32,6 +32,9 @@ main {
 .carousel-arrow,
 .learn-more-btn {
   outline: none;
+  display: inline-block;
+  position: relative;
+  z-index: 10;
 }
 
 body {
@@ -243,7 +246,7 @@ body {
 }
 
 .learn-more-btn {
-  pointer-events: none;
+  pointer-events: auto;
   text-decoration: none;
   color: var(--ink-border);
   font-family: "Monograph", monospace;
@@ -255,6 +258,9 @@ body {
   border-radius: 999px;
   padding: 0.35rem 0.9rem;
   background: var(--panel-bg);
+  display: inline-block;
+  position: relative;
+  z-index: 10;
 }
 
 .roulette-panel.is-active .learn-more-btn {
