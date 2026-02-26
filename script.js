@@ -1,22 +1,22 @@
 const images = [
   {
     src: "./images/retro_crt_workstation.svg",
-    title: "CRT WORKSTATION",
+    title: "Pc Benchmark",
     href: "./ordenadores/pc_benchmark.html",
   },
   {
     src: "./images/retro_tower_setup.svg",
-    title: "TORRE RETRO",
+    title: "PC Integrado",
     href: "./ordenadores/pc_integrado.html",
   },
   {
     src: "./images/retro_ibm_terminal.svg",
-    title: "TERMINAL IBM",
+    title: "PC Mural",
     href: "./ordenadores/pc_mural.html",
   },
   {
     src: "./images/retro_luggable_pc.svg",
-    title: "LUGGABLE PC",
+    title: "Portatil Readaptado",
     href: "./ordenadores/portatil_pc.html",
   },
 ];
@@ -62,30 +62,26 @@ function buildRoulette() {
     link.rel = "noopener noreferrer";
     link.textContent = "Ver más";
 
+    link.addEventListener("click", (e) => {
+      e.stopPropagation();
+    });
+    link.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      window.open(href, "_blank");
+    });
     overlay.append(titleEl, link);
     card.append(img, overlay);
     panel.appendChild(card);
 
-    // CAMBIO: Lógica de clic mejorada
     panel.addEventListener("click", (event) => {
-      const isActive = panel.classList.contains("is-active");
-
-      // Si no es móvil y la tarjeta no está activa, rotamos (bloqueando el enlace)
-      if (!isActive && !isMobileView()) {
-        event.preventDefault();
-        rotateToIndex(index);
-        return;
-      }
-
-      // Si está activa y pulsas el botón, el enlace funcionará normalmente gracias al CSS
       if (event.target.closest(".learn-more-btn")) return;
+      if (isMobileView()) return;
+      rotateToIndex(index);
     });
-
     roulette.appendChild(panel);
   });
 }
-
-// ... El resto de funciones (updateFocus, rotateRoulette, etc.) se mantienen igual ...
 
 function updateFocus() {
   const panels = roulette.querySelectorAll(".roulette-panel");

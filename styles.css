@@ -1,4 +1,4 @@
- * {
+  * {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
@@ -447,6 +447,27 @@
     .carousel-arrow {
       display: none;
     }
+    footer {
+  width: 95%; 
+  margin: 10px auto; 
+  background-color: #183642; 
+  color: #fdf2cc;
+  padding: 15px 0;
+  text-align: center;
+  flex-shrink: 0;
+  
+ 
+  border-radius: 50px; 
+
+  a {
+    color: #fdf2cc;
+    text-decoration: underline;
+    font-family: "Monograph", monospace;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    padding: 5px 10px;
+  }
+}
 
     .roulette {
       width: 100%;
@@ -518,6 +539,7 @@
     font-weight: bold;
     transition: all 0.3s ease;
     padding: 5px 10px;
+    
   }
 
   }
