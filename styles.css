@@ -69,11 +69,11 @@
   }
 
   .title-face {
-    font-size: clamp(2.5rem, 10vw, 7.5rem);
+    font-size: clamp(3.1rem, 11vw, 8.8rem);
     line-height: 1;
     font-weight: 800;
     text-transform: uppercase;
-    padding: clamp(0.92rem, 1.55vw, 1.45rem) clamp(1.2rem, 3.4vw, 2.8rem);
+    padding: clamp(1rem, 1.7vw, 1.6rem) clamp(1.4rem, 3.8vw, 3.2rem);
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -111,20 +111,20 @@
   }
 
   .carousel {
-    width: min(1120px, 100%);
-    margin-top: 2rem;
+    width: min(1240px, 100%);
+    margin-top: 3.1rem;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 0.75rem;
     perspective: 1700px;
     position: relative;
-    padding: 0 4.4rem;
+    padding: 0 5rem;
   }
 
   .carousel-stage {
     width: 100%;
-    min-height: 390px;
+    min-height: 450px;
     position: relative;
     display: flex;
     align-items: center;
@@ -146,11 +146,10 @@
 
   .roulette {
     --rotation-y: 0deg;
-    width: min(88vw, 980px);
-    height: min(44vw, 400px);
+    width: min(94vw, 1120px);
+    height: min(48vw, 460px);
     position: relative;
-    transform-style: preserve-3d;
-    transform: rotateX(-18deg) rotateY(var(--rotation-y));
+    transform: rotateY(var(--rotation-y));
     transition: transform 0.56s cubic-bezier(0.22, 0.91, 0.28, 0.98);
   }
 
@@ -158,9 +157,8 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    width: min(39vw, 400px);
-    height: min(22vw, 220px);
-    transform-style: preserve-3d;
+    width: min(43vw, 460px);
+    height: min(24vw, 250px);
     transform: translate(-50%, -50%);
     transition:
       transform 0.56s cubic-bezier(0.22, 0.91, 0.28, 0.98),
@@ -180,25 +178,12 @@
     display: block;
     width: 100%;
     height: 100%;
+    border: 2px solid var(--ink-border);
     border-radius: 22px;
     object-fit: cover;
-    clip-path: polygon(
-      0% 6%,
-      10% 3%,
-      25% 1%,
-      50% 0%,
-      75% 1%,
-      90% 3%,
-      100% 6%,
-      100% 94%,
-      90% 97%,
-      75% 99%,
-      50% 100%,
-      25% 99%,
-      10% 97%,
-      0% 94%
-    );
-    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.34);
+    box-shadow:
+      6px 6px 0 rgba(7, 26, 50, 0.2),
+      0 14px 34px rgba(0, 0, 0, 0.34);
     filter: saturate(0.95);
     transition:
       transform 0.35s ease,
@@ -210,22 +195,6 @@
     position: absolute;
     inset: 0;
     border-radius: 22px;
-    clip-path: polygon(
-      0% 6%,
-      10% 3%,
-      25% 1%,
-      50% 0%,
-      75% 1%,
-      90% 3%,
-      100% 6%,
-      100% 94%,
-      90% 97%,
-      75% 99%,
-      50% 100%,
-      25% 99%,
-      10% 97%,
-      0% 94%
-    );
     background: rgba(6, 29, 38, 0.54);
     opacity: 0;
     display: flex;
@@ -235,7 +204,9 @@
     gap: 0.6rem;
     transition: opacity 0.25s ease;
     pointer-events: none;
+    visibility: hidden;
     transform-origin: center;
+    z-index: 2;
   }
 
   .roulette-overlay-title {
@@ -249,6 +220,8 @@
 
   .learn-more-btn {
     pointer-events: auto;
+    position: relative;
+    z-index: 3;
     text-decoration: none;
     color: var(--ink-border);
     font-family: "Monograph", monospace;
@@ -269,18 +242,21 @@
   .roulette-panel.is-active .roulette-overlay {
     opacity: 1;
     pointer-events: auto;
-    transform: perspective(1200px) translateY(0) rotateX(3deg) scale(1.18);
+    visibility: visible;
+    transform: none;
   }
 
   .roulette-panel.is-active .roulette-image {
-    box-shadow: 0 20px 42px rgba(0, 0, 0, 0.42);
+    box-shadow:
+      10px 10px 0 rgba(7, 26, 50, 0.24),
+      0 20px 42px rgba(0, 0, 0, 0.42);
     filter: saturate(1.08);
-    transform: perspective(1200px) translateY(0) rotateX(3deg) scale(1.18);
+    transform: none;
+    pointer-events: none;
   }
 
   .roulette-panel.is-active {
-    transform: translate(-50%, -50%) translateY(86px) translateZ(228px)
-      rotateX(3deg);
+    transform: translate(-50%, -50%) translateY(100px) scale(1);
     opacity: 1;
     z-index: 4;
   }
@@ -289,29 +265,27 @@
   .roulette-panel.is-right .roulette-image {
     filter: saturate(0.92) brightness(0.94);
     box-shadow: 0 12px 28px rgba(0, 0, 0, 0.28);
-    transform: perspective(1200px) translateY(12px) rotateX(2deg) scale(0.9);
+    transform: translateY(12px) scale(0.9);
   }
 
   .roulette-panel.is-left .roulette-image {
-    transform: perspective(1200px) translateY(12px) rotateX(2deg) rotateY(25deg)
-      scale(0.9);
+    transform: translateY(12px) scale(0.9);
   }
 
   .roulette-panel.is-right .roulette-image {
-    transform: perspective(1200px) translateY(12px) rotateX(2deg) rotateY(-25deg)
-      scale(0.9);
+    transform: translateY(12px) scale(0.9);
   }
 
   .roulette-panel.is-left {
-    transform: translate(-50%, -50%) translateX(-286px) translateY(-10px)
-      translateZ(120px) rotateY(36deg) rotateZ(10deg);
+    transform: translate(-50%, -50%) translateX(-380px) translateY(-10px)
+      scale(0.92);
     opacity: 0.92;
     z-index: 3;
   }
 
   .roulette-panel.is-right {
-    transform: translate(-50%, -50%) translateX(286px) translateY(-10px)
-      translateZ(120px) rotateY(-36deg) rotateZ(-10deg);
+    transform: translate(-50%, -50%) translateX(380px) translateY(-10px)
+      scale(0.92);
     opacity: 0.92;
     z-index: 3;
   }
@@ -319,12 +293,11 @@
   .roulette-panel.is-back .roulette-image {
     filter: saturate(0.78) brightness(0.8);
     box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
-    transform: perspective(1200px) rotateX(-4deg) scale(0.84);
+    transform: scale(0.84);
   }
 
   .roulette-panel.is-back {
-    transform: translate(-50%, -50%) translateY(-138px) translateZ(62px)
-      rotateX(-5deg) scale(0.84);
+    transform: translate(-50%, -50%) translateY(-155px) scale(0.84);
     opacity: 0.82;
     z-index: 2;
   }
@@ -407,23 +380,21 @@
     }
 
     .roulette-panel.is-active {
-      transform: translate(-50%, -50%) translateY(62px) translateZ(174px)
-        rotateX(2deg);
+      transform: translate(-50%, -50%) translateY(62px) scale(1);
     }
 
     .roulette-panel.is-left {
-      transform: translate(-50%, -50%) translateX(-194px) translateY(-4px)
-        translateZ(98px) rotateY(30deg) rotateZ(8deg);
+      transform: translate(-50%, -50%) translateX(-220px) translateY(-4px)
+        scale(0.9);
     }
 
     .roulette-panel.is-right {
-      transform: translate(-50%, -50%) translateX(194px) translateY(-4px)
-        translateZ(98px) rotateY(-30deg) rotateZ(-8deg);
+      transform: translate(-50%, -50%) translateX(220px) translateY(-4px)
+        scale(0.9);
     }
 
     .roulette-panel.is-back {
-      transform: translate(-50%, -50%) translateY(-100px) translateZ(32px)
-        rotateX(-4deg) scale(0.82);
+      transform: translate(-50%, -50%) translateY(-100px) scale(0.82);
     }
 
     .carousel-arrow {
@@ -514,6 +485,7 @@
     .carousel .roulette-panel.is-active .roulette-overlay {
       opacity: 1;
       pointer-events: auto;
+      visibility: visible;
       transform: none;
       background: rgba(6, 29, 38, 0.62);
     }
@@ -523,6 +495,7 @@
     }
 
     .learn-more-btn {
+      pointer-events: auto;
       font-size: clamp(0.85rem, 2.8vw, 1rem);
     }
   }

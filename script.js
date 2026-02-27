@@ -1,93 +1,30 @@
-const images = [
-  {
-    src: "./images/pc_benchmark.jpeg",
-    title: "Pc en Caja de Madera",
-    href: "./ordenadores/pc_benchmark.html",
-  },
-  {
-    src: "./images/mesa2.webp",
-    title: "PC Integrado en Mesa",
-    href: "./ordenadores/pc_integrado.html",
-  },
-  {
-    src: "./images/pcmural.png",
-    title: "PC Mural",
-    href: "./ordenadores/pc_mural.html",
-  },
-  {
-    src: "./images/portatil_desmontado.jpeg",
-    title: "Portatil Readaptado",
-    href: "./ordenadores/portatil_pc.html",
-  },
-];
-
 let currentIndex = 0;
 let isAnimating = false;
 const SPIN_MS = 280;
 const RESET_MS = 220;
 const STEP_DELAY_MS = 60;
 const MOBILE_BREAKPOINT = 700;
+const SPIN_OFFSET_DEG = 14;
 
 const roulette = document.getElementById("roulette");
+const panels = Array.from(roulette.querySelectorAll(".roulette-panel"));
 const isMobileView = () =>
   window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT}px)`).matches;
+const isDesktopView = () => !isMobileView();
+const isPanelActive = (index) => index === currentIndex;
 
-function buildRoulette() {
-  roulette.innerHTML = "";
-
-  images.forEach(({ src, title, href }, index) => {
-    const panel = document.createElement("div");
-    panel.className = "roulette-panel";
-    panel.dataset.index = index;
-
-    const card = document.createElement("div");
-    card.className = "roulette-card";
-
-    const img = document.createElement("img");
-    img.className = "roulette-image";
-    img.src = src;
-    img.alt = title;
-
-    const overlay = document.createElement("div");
-    overlay.className = "roulette-overlay";
-
-    const titleEl = document.createElement("h3");
-    titleEl.className = "roulette-overlay-title";
-    titleEl.textContent = title;
-
-    const link = document.createElement("a");
-    link.className = "learn-more-btn";
-    link.href = href;
-    link.textContent = "Ver más";
-
-    link.addEventListener("click", (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-
-      const panelIndex = parseInt(panel.dataset.index);
-      if (panelIndex === currentIndex || isMobileView()) {
-        window.location.href = href;
-      } else {
-        rotateToIndex(panelIndex);
-      }
-    });
-
-    overlay.append(titleEl, link);
-    card.append(img, overlay);
-    panel.appendChild(card);
-
-    panel.addEventListener("click", (event) => {
-      if (event.target.closest(".learn-more-btn")) return;
-      if (isMobileView()) return;
-      rotateToIndex(index);
-    });
-    roulette.appendChild(panel);
-  });
-}
+const clickedInside = (event, element) => {
+  const rect = element.getBoundingClientRect();
+  return (
+    event.clientX >= rect.left &&
+    event.clientX <= rect.right &&
+    event.clientY >= rect.top &&
+    event.clientY <= rect.bottom
+  );
+};
 
 function updateFocus() {
-  const panels = roulette.querySelectorAll(".roulette-panel");
-  const total = images.length;
+  const total = panels.length;
 
   panels.forEach((panel, index) => {
     const isActive = index === currentIndex;
@@ -110,10 +47,10 @@ function rotateRoulette(direction) {
   if (isAnimating) return;
   isAnimating = true;
 
-  currentIndex = (currentIndex + direction + images.length) % images.length;
+  currentIndex = (currentIndex + direction + panels.length) % panels.length;
   roulette.style.setProperty(
     "--rotation-y",
-    direction > 0 ? "-14deg" : "14deg",
+    direction > 0 ? `-${SPIN_OFFSET_DEG}deg` : `${SPIN_OFFSET_DEG}deg`,
   );
   updateFocus();
   setTimeout(() => {
@@ -128,7 +65,7 @@ function rotateRoulette(direction) {
 function rotateToIndex(targetIndex) {
   if (isAnimating || targetIndex === currentIndex) return;
 
-  const total = images.length;
+  const total = panels.length;
   const forward = (targetIndex - currentIndex + total) % total;
   const backward = (currentIndex - targetIndex + total) % total;
   const direction = forward <= backward ? 1 : -1;
@@ -147,13 +84,43 @@ function rotateToIndex(targetIndex) {
   spinStep();
 }
 
+panels.forEach((panel, index) => {
+  const link = panel.querySelector(".learn-more-btn");
+  if (link) {
+    link.addEventListener("click", (event) => {
+      if (isDesktopView() && !isPanelActive(index)) {
+        event.preventDefault();
+        event.stopPropagation();
+        rotateToIndex(index);
+      }
+    });
+  }
+
+  panel.addEventListener("click", (event) => {
+    if (isDesktopView() && link && isPanelActive(index)) {
+      // Chromium can report the wrong click target with transformed layers.
+      if (clickedInside(event, link)) {
+        event.preventDefault();
+        event.stopPropagation();
+        window.location.assign(link.href);
+        return;
+      }
+    }
+
+    const target = event.target;
+    if (target instanceof Element && target.closest(".learn-more-btn")) return;
+    if (isMobileView()) return;
+    rotateToIndex(index);
+  });
+});
+
 document.getElementById("prev-btn").addEventListener("click", () => {
-  if (isMobileView()) return;
+  if (!isDesktopView() || panels.length === 0) return;
   rotateRoulette(-1);
 });
 
 document.getElementById("next-btn").addEventListener("click", () => {
-  if (isMobileView()) return;
+  if (!isDesktopView() || panels.length === 0) return;
   rotateRoulette(1);
 });
 
@@ -171,5 +138,6 @@ titleFlip.addEventListener("keydown", (event) => {
   }
 });
 
-buildRoulette();
-updateFocus();
+if (panels.length > 0) {
+  updateFocus();
+}
