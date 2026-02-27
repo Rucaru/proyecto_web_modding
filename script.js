@@ -63,13 +63,17 @@ function buildRoulette() {
     link.textContent = "Ver más";
 
     link.addEventListener("click", (e) => {
-      e.stopPropagation();
-    });
-    link.addEventListener("click", (e) => {
       e.preventDefault();
       e.stopPropagation();
-      window.open(href, "_blank");
+      
+      const panelIndex = parseInt(panel.dataset.index);
+      if (panelIndex === currentIndex || isMobileView()) {
+        window.open(href, "_blank");
+      } else {
+        rotateToIndex(panelIndex);
+      }
     });
+
     overlay.append(titleEl, link);
     card.append(img, overlay);
     panel.appendChild(card);
