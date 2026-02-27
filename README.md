@@ -15,9 +15,7 @@ Este sitio web es el escaparate digital para el proyecto de **Modding** realizad
 ## 🚀 Características Principales
 
 * **Exposición Digital:** Muestra de los ordenadores personalizados creados en clase.
-* **Detalles por Grupo:** Espacio dedicado a cada equipo de trabajo.
 * **Documentación Visual:** Galería de imágenes con el proceso de montaje.
-* **Interfaz Moderna:** Diseño adaptado para resaltar la estética de los equipos.
 
 ---
 
@@ -30,4 +28,6 @@ Este sitio web es el escaparate digital para el proyecto de **Modding** realizad
 
 ## 🛠️ Vista de la página desplegada
 
-Si quieres ver la página web en cualquier dispositivo, [pincha aquí](https://proyecto-web-modding.vercel.app/).
+Si quieres ver la página web en cualquier dispositivo, [haz click aquí](https://proyecto-web-modding.vercel.app/) o escanea este QR:
+
+<img src="images/Proyecto%20Modding.png" alt="Código QR del Proyecto" width="150">
