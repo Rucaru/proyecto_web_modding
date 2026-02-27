@@ -96,9 +96,10 @@ h1 {
   position: relative;
   border: 3px solid #071a32;
   border-radius: 20px;
-  overflow: hidden;
+  overflow: visible;
   background: #fff;
   box-shadow: 10px 10px 0 rgba(7, 26, 50, 0.1);
+  z-index: 2;
 }
 
 .ordenador-wrapper {
@@ -109,6 +110,8 @@ h1 {
   display: block;
   width: 100%;
   height: auto;
+  border-radius: 17px;
+  clip-path: inset(0 round 17px);
   filter: contrast(1.05);
 }
 
@@ -130,6 +133,7 @@ h1 {
   transition:
     transform 0.2s ease,
     box-shadow 0.2s ease;
+  z-index: 2;
 }
 
 .punto-interactivo::after,
@@ -179,7 +183,7 @@ h1 {
   bottom: 140%;
   left: 14px;
   transform: translateX(-50%) translateY(8px);
-  z-index: 10;
+  z-index: 30;
   font-size: 0.84rem;
   line-height: 1.4;
   border: 1px solid rgba(1, 32, 15, 0.75);
@@ -201,6 +205,8 @@ h1 {
   border-radius: 20px;
   padding: 2rem;
   box-shadow: 10px 10px 0 rgba(7, 26, 50, 0.1);
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
@@ -300,49 +306,39 @@ body.benchmark .info-panel h2 {
   color: #22333B;
 }
 
-/* integrado page overrides with #A63D40 palette */
+/* integrated page uses the base style like the rest */
 body.integrado {
   color: #A63D40;
 }
+
 body.integrado .home-link {
   color: #A63D40;
 }
+
 body.integrado .home-link:hover {
   background-color: #A63D40;
   color: #fdf2cc;
 }
+
 body.integrado h1 {
   color: #A63D40;
 }
+
 body.integrado .subtitulo {
   color: #A63D40;
 }
-body.integrado .punto-interactivo,
-body.integrado .punto {
-  background: linear-gradient(145deg, #B85357, #A63D40);
-  box-shadow: 0 0 0 8px rgba(166, 61, 64, 0.2),
-    0 6px 18px rgba(0, 0, 0, 0.35);
-}
-body.integrado .punto-interactivo::after,
-body.integrado .punto::after {
-  border-color: rgba(166, 61, 64, 0.55);
-}
-body.integrado .punto-interactivo:hover,
-body.integrado .punto:hover {
-  box-shadow: 0 0 0 10px rgba(166, 61, 64, 0.26),
-    0 10px 20px rgba(0, 0, 0, 0.45);
-}
-body.integrado .etiqueta {
-  background: rgba(166, 61, 64, 0.86);
-  border: 1px solid rgba(166, 61, 64, 0.7);
-}
-body.integrado .descripcion {
-  background: rgba(166, 61, 64, 0.95);
-  border: 1px solid rgba(166, 61, 64, 0.75);
-}
+
 body.integrado .info-panel h2 {
   border-bottom: 2px solid #A63D40;
   color: #A63D40;
+}
+
+body.integrado .main-content {
+  flex: 1;
+}
+
+body.integrado footer {
+  margin-top: auto;
 }
 
 /* mural page overrides with #482728 palette */
@@ -390,4 +386,55 @@ body.mural .descripcion {
 body.mural .info-panel h2 {
   border-bottom: 2px solid #482728;
   color: #482728;
+}
+
+footer {
+  width: 100%;
+  background-color: #183642;
+  color: #fdf2cc;
+  padding: 10px 0;
+  text-align: center;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 20;
+  margin-top: 0.5rem;
+}
+
+.footer-content {
+  max-width: 1150px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+}
+
+footer a {
+  color: #fdf2cc;
+  text-decoration: underline;
+  font-family: "Monograph", monospace;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  padding: 5px 10px;
+}
+
+footer a:hover {
+  background-color: #710000;
+  color: #fdf2cc;
+  border-radius: 5px;
+  text-decoration: none;
+}
+
+@media (max-width: 700px) {
+  footer {
+    width: 95%;
+    margin: 10px auto;
+    background-color: #183642;
+    color: #fdf2cc;
+    padding: 15px 0;
+    text-align: center;
+    flex-shrink: 0;
+    border-radius: 50px;
+  }
 }

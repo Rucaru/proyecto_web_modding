@@ -1,21 +1,21 @@
 const images = [
   {
-    src: "./images/retro_crt_workstation.svg",
-    title: "Pc Benchmark",
+    src: "./images/pc_benchmark.jpeg",
+    title: "Pc en Caja de Madera",
     href: "./ordenadores/pc_benchmark.html",
   },
   {
-    src: "./images/retro_tower_setup.svg",
-    title: "PC Integrado",
+    src: "./images/mesa2.webp",
+    title: "PC Integrado en Mesa",
     href: "./ordenadores/pc_integrado.html",
   },
   {
-    src: "./images/retro_ibm_terminal.svg",
+    src: "./images/pcmural.png",
     title: "PC Mural",
     href: "./ordenadores/pc_mural.html",
   },
   {
-    src: "./images/retro_luggable_pc.svg",
+    src: "./images/portatil_desmontado.jpeg",
     title: "Portatil Readaptado",
     href: "./ordenadores/portatil_pc.html",
   },
@@ -58,17 +58,15 @@ function buildRoulette() {
     const link = document.createElement("a");
     link.className = "learn-more-btn";
     link.href = href;
-    link.target = "_blank";
-    link.rel = "noopener noreferrer";
     link.textContent = "Ver más";
 
     link.addEventListener("click", (e) => {
       e.preventDefault();
       e.stopPropagation();
-      
+
       const panelIndex = parseInt(panel.dataset.index);
       if (panelIndex === currentIndex || isMobileView()) {
-        window.open(href, "_blank");
+        window.location.href = href;
       } else {
         rotateToIndex(panelIndex);
       }

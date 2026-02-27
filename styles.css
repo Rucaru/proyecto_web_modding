@@ -15,6 +15,7 @@
     align-items: center;
     flex: 1;
     justify-content: center;
+    padding-bottom: 1rem;
   }
 
   @font-face {
@@ -532,6 +533,9 @@
     padding: 10px 0;
     text-align: center;
     flex-shrink: 0;
+    position: relative;
+    z-index: 20;
+    margin-top: 0.5rem;
     a {
     color: #fdf2cc;
     text-decoration: underline;
